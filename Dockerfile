@@ -22,6 +22,7 @@ RUN apk --no-cache --update add \
         linux-headers   \
         wget            \
         pcre-dev        \
+        pcre            \
         zlib-dev        \
         geoip-dev       \
         build-base      \
@@ -34,7 +35,7 @@ RUN apk --no-cache --update add \
 
 # Install nginx-mainline
 
-USER http
+USER ${USR_USER}
 
 ENV NGINX_MAJOR 1
 ENV NGINX_MINOR 13
@@ -73,32 +74,65 @@ RUN cd nginx-${NGINX_VERSION} && \
         --http-log-path=/var/log/nginx/access.log        \
         --error-log-path=stderr                          \
                                                          \
-        # Default Modules                                \
-        --with-compat                                    \
+        # Enable support for dynamic modules
+        # --with-compat                                   \
+        # Enable support for async IO
         --with-file-aio                                  \
+        # Enable support for thread execution
+        --with-threads                                   \
+        # http_addition_module module is a filter that adds text before and after a response.
         --with-http_addition_module                      \
+        # The ngx_http_auth_request_module module (1.5.4+) implements client authorization based on the result of a subrequest.
         --with-http_auth_request_module                  \
-        --with-http_dav_module                           \
+        # The ngx_http_dav_module module is intended for file management automation via the WebDAV protocol.
+        #--with-http_dav_module                           \
+        # The ngx_http_flv_module module provides pseudo-streaming server-side support for Flash Video (FLV) files.
+        #--with-http_flv_module                           \
+        # Allow to return 204 or 444 code for some locations on low memory condition.
         --with-http_degradation_module                   \
-        --with-http_flv_module                           \
+        # The ngx_http_geoip_module module (0.8.6+) creates variables with values depending on the client IP address, using the precompiled MaxMind databases.
         --with-http_geoip_module                         \
+        # The ngx_http_gunzip_module module is a filter that decompresses responses with “Content-Encoding: gzip” for clients that do not support “gzip” encoding method.
         --with-http_gunzip_module                        \
-        --with-http_random_index_module                  \
-        --with-http_gzip_static_module                   \ 
-        --with-http_realip_module                        \
+# The ngx_http_random_index_module module processes requests ending with the slash character (‘/’) and picks a random file in a directory to serve as an index file. The module is processed before the ngx_http_index_module module.
+        #--with-http_random_index_module                  \
+        # The ngx_http_gzip_static_module module allows sending precompressed files with the “.gz” filename extension instead of regular files.
+        #--with-http_gzip_static_module                   \ 
+        # The ngx_http_image_filter_module module (0.7.54+) is a filter that transforms images in JPEG, GIF, PNG, and WebP formats.
+        #--with-http_image_filter_module                  \
+        # The ngx_http_mp4_module module provides pseudo-streaming server-side support for MP4 files. Such files typically have the .mp4, .m4v, or .m4a filename extensions.
+        #--with-http_mp4_module                           \
+        # The ngx_http_perl_module module is used to implement location and variable handlers in Perl and insert Perl calls into SSI.
+        #--with-http_perl_module                          \ 
+        # The ngx_http_realip_module module is used to change the client address and optional port to those sent in the specified header field.
+        #--with-http_realip_module                        \
+        # The ngx_http_secure_link_module module (0.7.18) is used to check authenticity of requested links, protect resources from unauthorized access, and limit link lifetime.
         --with-http_secure_link_module                   \
+        # The ngx_http_slice_module module (1.9.8) is a filter that splits a request into subrequests, each returning a certain range of response. The filter provides more effective caching of big responses.
         --with-http_slice_module                         \
+        # The ngx_http_ssl_module module provides the necessary support for HTTPS.
         --with-http_ssl_module                           \
         --with-http_stub_status_module                   \
-        --with-http_sub_module                           \
+        # The ngx_http_sub_module module is a filter that modifies a response by replacing one specified string by another.
+        #--with-http_sub_module                           \
+        # The ngx_http_v2_module module (1.9.5) provides support for HTTP/2 and supersedes the ngx_http_spdy_module module.
         --with-http_v2_module                            \
+        # The ngx_pcre_jit module enables "just-in-time compilation" (PCRE JIT) for the regular expressions known by the time of configuration parsing.
         --with-pcre-jit                                  \
-        --with-stream                                    \
-        --with-stream_geoip_module                       \
-        --with-stream_realip_module                      \
-        --with-stream_ssl_module                         \
-        --with-stream_ssl_preread_module                 \
-        --with-threads                                   \
+        # The ngx_mail modules enables the configuration for mail servers
+        #--with-mail                                      \
+        # The ngx_mail_ssl_module module provides the necessary support for a mail proxy server to work with the SSL/TLS protocol.
+        #--with-mail_ssl_module                           \ 
+        # the ngx_stream_core_module enables use of upstream o stream server
+        #--with-stream                                    \
+        # The ngx_stream_geoip_module module (1.11.3) creates variables with values depending on the client IP address, using the precompiled MaxMind databases.
+        #--with-stream_geoip_module                       \
+        # The ngx_stream_realip_module module is used to change the client address and port to the ones sent in the PROXY protocol header (1.11.4).
+        #--with-stream_realip_module                      \
+        # The ngx_stream_ssl_module module (1.9.0) provides the necessary support for a stream proxy server to work with the SSL/TLS protocol.
+        #--with-stream_ssl_module                         \
+        # The ngx_stream_ssl_preread_module module (1.11.5) allows extracting information from the ClientHello message without terminating SSL/TLS
+        #--with-stream_ssl_preread_module                 \
                                                          \
         # Modules                                        \
         --add-module=../naxsi-${NAXSI_VERSION}/naxsi_src \

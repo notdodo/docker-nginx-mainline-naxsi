@@ -1,5 +1,6 @@
 FROM alpine:latest
-
+LABEL version 1.2
+LABEL description "NGINX Mainline version with NAXSI WAF"
 MAINTAINER Edoardo Rosa <edoardo [dot] rosa90 [at] gmail [dot] com> (edoz90)
 
 # == BASIC SOFTWARE ============================================================
@@ -39,7 +40,7 @@ USER ${USR_USER}
 
 ENV NGINX_MAJOR 1
 ENV NGINX_MINOR 13
-ENV NGINX_BUILD 1
+ENV NGINX_BUILD 3
 ENV NGINX_VERSION ${NGINX_MAJOR}.${NGINX_MINOR}.${NGINX_BUILD}
 ENV NGINX_SOURCE https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 ENV NGINX_PUBKEY B0F4253373F8F6F510D42178520A9993A1C052F8

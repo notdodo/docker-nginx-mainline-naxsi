@@ -40,7 +40,7 @@ USER ${USR_USER}
 
 ENV NGINX_MAJOR 1
 ENV NGINX_MINOR 13
-ENV NGINX_BUILD 4
+ENV NGINX_BUILD 5
 ENV NGINX_VERSION ${NGINX_MAJOR}.${NGINX_MINOR}.${NGINX_BUILD}
 ENV NGINX_SOURCE https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 ENV NGINX_PUBKEY B0F4253373F8F6F510D42178520A9993A1C052F8
@@ -74,7 +74,6 @@ RUN cd nginx-${NGINX_VERSION} && \
         --group=${USR_USER}                              \
         --http-log-path=/var/log/nginx/access.log        \
         --error-log-path=stderr                          \
-                                                         \
         # Enable support for dynamic modules
         # --with-compat                                   \
         # Enable support for async IO
@@ -134,14 +133,11 @@ RUN cd nginx-${NGINX_VERSION} && \
         #--with-stream_ssl_module                         \
         # The ngx_stream_ssl_preread_module module (1.11.5) allows extracting information from the ClientHello message without terminating SSL/TLS
         #--with-stream_ssl_preread_module                 \
-                                                         \
         # Modules                                        \
         --add-module=../naxsi-${NAXSI_VERSION}/naxsi_src \
-                                                         \
-        && \
-        make -j2 
+        && make -j2 
 
-# Change the user back to `root`.
+# Change the user back to 'root'.
 USER root
 
 RUN cd nginx-${NGINX_VERSION} && \

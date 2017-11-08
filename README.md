@@ -5,7 +5,7 @@ Minimal docker alpine-based for NGINX mainline version with naxsi WAF
 
 [CHANGES](https://nginx.org/en/CHANGES)
 
-[LATEST](https://nginx.org/download/nginx-1.13.1.tar.gz)
+[LATEST](https://nginx.org/download/nginx-1.13.6.tar.gz)
 
 ## NAXSI
 

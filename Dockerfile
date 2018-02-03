@@ -40,10 +40,10 @@ USER ${USR_USER}
 
 ENV NGINX_MAJOR 1
 ENV NGINX_MINOR 13
-ENV NGINX_BUILD 6
+ENV NGINX_BUILD 7
 ENV NGINX_VERSION ${NGINX_MAJOR}.${NGINX_MINOR}.${NGINX_BUILD}
 ENV NGINX_SOURCE https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
-ENV NGINX_PUBKEY B0F4253373F8F6F510D42178520A9993A1C052F8
+ENV NGINX_PUBKEY https://nginx.org/keys/mdounin.key
 
 ENV NAXSI_VERSION 0.56rc1
 ENV NAXSI_SOURCE https://github.com/nbs-system/naxsi/archive/${NAXSI_VERSION}/naxsi-${NAXSI_VERSION}.tar.gz
@@ -52,10 +52,9 @@ RUN mkdir -p /usr/share/nginx/sources
 WORKDIR /usr/share/nginx/sources
 
 RUN mkdir -p nginx-${NGINX_VERSION}
-RUN wget ${NGINX_SOURCE} && wget ${NGINX_SOURCE}.asc && \
-    gpg --keyserver pgpkeys.mit.edu --recv-key ${NGINX_PUBKEY}  && \
-    gpg --verify nginx-${NGINX_VERSION}.tar.gz.asc nginx-${NGINX_VERSION}.tar.gz && \
-    tar -zxf nginx-${NGINX_VERSION}.tar.gz && \
+RUN wget ${NGINX_SOURCE} && wget ${NGINX_SOURCE}.asc && wget ${NGINX_PUBKEY}
+RUN gpg --import $(basename ${NGINX_PUBKEY}) && gpg --verify nginx-${NGINX_VERSION}.tar.gz.asc
+RUN tar -zxf nginx-${NGINX_VERSION}.tar.gz && \
     rm nginx-${NGINX_VERSION}.tar.gz.asc && \
     rm nginx-${NGINX_VERSION}.tar.gz
 

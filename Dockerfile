@@ -39,8 +39,8 @@ RUN apk --no-cache --update add \
 USER ${USR_USER}
 
 ENV NGINX_MAJOR 1
-ENV NGINX_MINOR 13
-ENV NGINX_BUILD 12
+ENV NGINX_MINOR 14
+ENV NGINX_BUILD 0
 ENV NGINX_VERSION ${NGINX_MAJOR}.${NGINX_MINOR}.${NGINX_BUILD}
 ENV NGINX_SOURCE https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 ENV NGINX_PUBKEY https://nginx.org/keys/mdounin.key

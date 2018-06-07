@@ -1,5 +1,5 @@
 FROM alpine:latest
-LABEL version 1.2
+LABEL version 1.2.1
 LABEL description "NGINX Mainline version with NAXSI WAF"
 MAINTAINER Edoardo Rosa <edoardo [dot] rosa90 [at] gmail [dot] com> (edoz90)
 

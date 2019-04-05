@@ -1,4 +1,4 @@
-# docker-nginx-mainline [![Build Status](https://travis-ci.org/edoz90/docker-nginx-mainline.svg?branch=master)](https://travis-ci.org/edoz90/docker-nginx-mainline)
+# docker-nginx-mainline [![Build Status](https://travis-ci.org/edoz90/docker-nginx-mainline-naxsi.svg?branch=master)](https://travis-ci.org/edoz90/docker-nginx-mainline-naxsi)
 Minimal docker alpine-based for NGINX mainline version with naxsi WAF
 
 ## NGINX

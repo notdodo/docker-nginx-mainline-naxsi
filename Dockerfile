@@ -39,13 +39,13 @@ RUN apk --no-cache --update add \
 USER ${USR_USER}
 
 ENV NGINX_MAJOR 1
-ENV NGINX_MINOR 17
-ENV NGINX_BUILD 9
+ENV NGINX_MINOR 19
+ENV NGINX_BUILD 3
 ENV NGINX_VERSION ${NGINX_MAJOR}.${NGINX_MINOR}.${NGINX_BUILD}
 ENV NGINX_SOURCE https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 ENV NGINX_PUBKEY https://nginx.org/keys/mdounin.key
 
-ENV NAXSI_VERSION 0.56
+ENV NAXSI_VERSION 1.3
 ENV NAXSI_SOURCE https://github.com/nbs-system/naxsi/archive/${NAXSI_VERSION}/naxsi-${NAXSI_VERSION}.tar.gz
 
 RUN mkdir -p /usr/share/nginx/sources
